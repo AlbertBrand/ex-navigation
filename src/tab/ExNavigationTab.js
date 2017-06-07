@@ -203,21 +203,11 @@ class ExNavigationTab extends PureComponent<any, Props, State> {
   componentWillMount() {
     this._parseTabItems(this.props);
 
-    this._registerNavigatorContext();
+    this._updateNavigatorContext();
+  }
 
-    this.props.navigation.dispatch(
-      Actions.setCurrentNavigator(
-        this.state.navigatorUID,
-        this.state.parentNavigatorUID,
-        'tab',
-        {},
-        [
-          {
-            key: this.props.initialTab,
-          },
-        ]
-      )
-    );
+  componentDidMount() {
+    this._updateNavigatorContext();
   }
 
   componentWillUnmount() {
@@ -261,6 +251,24 @@ class ExNavigationTab extends PureComponent<any, Props, State> {
         );
       }
     }
+  }
+
+  _updateNavigatorContext() {
+    this._registerNavigatorContext();
+
+    this.props.navigation.dispatch(
+      Actions.setCurrentNavigator(
+        this.state.navigatorUID,
+        this.state.parentNavigatorUID,
+        'tab',
+        {},
+        [
+          {
+            key: this.props.initialTab,
+          },
+        ]
+      )
+    );
   }
 
   _updateRenderedTabKeys(props, currentRenderedTabKeys) {
